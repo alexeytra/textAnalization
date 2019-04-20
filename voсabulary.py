@@ -12,7 +12,7 @@ def getCSVSample():
     sentences = df['sentence']
     action = df['action']
 
-    sentences_train, sentences_test, action_train, action_test = train_test_split(sentences, action, test_size=0.5, random_state=1000)
+    sentences_train, sentences_test, action_train, action_test = train_test_split(sentences, action, test_size=0.10, random_state=1000)
     return sentences_train, action_train, sentences_test, action_test
 
 def getCSVTest():
@@ -21,7 +21,7 @@ def getCSVTest():
     df_list.append(table)
     df = pd.concat(df_list)
 
-    sentences = df['x'].values + " " + df['r'].values + " " + df['y'].values
-    return sentences
+    df['sentence'] = df['x'] + ' ' + df['r'] + ' ' + df['y']
+    return df['sentence']
 
 
