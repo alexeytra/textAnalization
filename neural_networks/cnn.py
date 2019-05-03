@@ -28,6 +28,7 @@ class CNNModel:
         self.__num_actions = None
         self.__tokenizer = None
         self.__encoder = None
+        self.__num_samples = None
 
 
     def __text_preproccessing(self):
@@ -47,8 +48,9 @@ class CNNModel:
 
         self.__tokenizer = tokenizer
         self.__encoder = encoder
+        self.__num_samples = pd.Series(self.__actions, name='A').unique()
 
-    def get_cnn_model_v1(self):
+    def activate_cnn_model_v1(self):
         self.__text_preproccessing()
 
         model = Sequential()
@@ -59,7 +61,7 @@ class CNNModel:
         model.add(Dense(256))
         model.add(Dropout(0.2))
         model.add(Activation('relu'))
-        model.add(Dense(5))
+        model.add(Dense(self.__num_samples))
         model.add(Activation('softmax'))
         model.summary()
         model.compile(loss='categorical_crossentropy', optimizer='adam', metrics=['acc'])

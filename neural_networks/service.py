@@ -35,7 +35,7 @@ class Service:
         plt.legend()
         plt.show()
 
-    def predictio_nmlp(self):
+    def prediction_mlp(self):
         y_test = self.__tokenizer.texts_to_matrix(self.__test, mode='tfidf')
         self.__prediction(y_test)
 
