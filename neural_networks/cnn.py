@@ -61,7 +61,7 @@ class CNNModel:
         model.add(Dense(256))
         model.add(Dropout(0.2))
         model.add(Activation('relu'))
-        model.add(Dense(self.__num_samples))
+        model.add(Dense(self.__num_samples.size))
         model.add(Activation('softmax'))
         model.summary()
         model.compile(loss='categorical_crossentropy', optimizer='adam', metrics=['acc'])
