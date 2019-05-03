@@ -36,3 +36,25 @@ model.add(layers.Dropout(0.3))
 model.add(layers.Dense(100, activation='relu'))
 model.add(layers.Dropout(0.3))
 model.add(layers.Dense(num_samples, activation='softmax'))
+
+
+df_list = []
+table = pd.read_json('samples/train.json', encoding='utf-8', orient='index')
+df_list.append(table)
+df = pd.concat(df_list)
+df['sentence'] = df['x'] + ' ' + df['R'] + ' ' + df['y']
+sentences = df['sentence']
+actions = df['action']
+
+['Записать дефиницию', 'Построение правила', 'Записать ограничение',
+       'Записать условие', 'Вычислить формулу']
+
+
+{
+  "": {
+    "x": "",
+    "R": "",
+    "y": "",
+    "action": ""
+  }
+}
