@@ -70,3 +70,44 @@ class CNNModel:
         serviceNNs = Service(self.__encoder, self.__tokenizer, model)
         serviceNNs.plot_history(history)
         serviceNNs.prediction_cnn(self.__max_len)
+
+
+    def activate_cnn_model_v2(self):
+        self.__text_preproccessing()
+
+        model = Sequential()
+        model.add(Embedding(1000, 20, input_length=self.__max_len))
+        model.add(Dropout(0.2))
+        model.add(Conv1D(300, 3, padding='valid', activation='relu', strides=1))
+        model.add(GlobalMaxPooling1D())
+        model.add(Dense(250))
+        model.add(Dropout(0.2))
+        model.add(Activation('relu'))
+        model.add(Dense(self.__num_samples.size))
+        model.add(Activation('softmax'))
+        model.summary()
+        model.compile(loss='categorical_crossentropy', optimizer='adam', metrics=['acc'])
+        history = model.fit(self.__X_train, self.__y_train, batch_size=5, epochs=30, verbose=1, validation_split=0.1)
+
+        serviceNNs = Service(self.__encoder, self.__tokenizer, model)
+        serviceNNs.plot_history(history)
+        serviceNNs.prediction_cnn(self.__max_len)
+
+    def activate_cnn_model_v3(self):
+        self.__text_preproccessing()
+
+        model = Sequential()
+        model.add(Embedding(1000, 20, input_length=self.__max_len))
+        model.add(Conv1D(300, 3, padding='valid', activation='relu', strides=1))
+        model.add(GlobalMaxPooling1D())
+        model.add(Dense(250))
+        model.add(Activation('relu'))
+        model.add(Dense(self.__num_samples.size))
+        model.add(Activation('softmax'))
+        model.summary()
+        model.compile(loss='categorical_crossentropy', optimizer='adam', metrics=['acc'])
+        history = model.fit(self.__X_train, self.__y_train, batch_size=5, epochs=30, verbose=1, validation_split=0.1)
+
+        serviceNNs = Service(self.__encoder, self.__tokenizer, model)
+        serviceNNs.plot_history(history)
+        serviceNNs.prediction_cnn(self.__max_len)

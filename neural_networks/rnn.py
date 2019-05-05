@@ -1,5 +1,5 @@
 from keras.models import Sequential
-from keras.layers import Dense, Dropout
+from keras.layers import Dense, Dropout, SpatialDropout1D
 from keras.layers import Embedding
 from keras.layers import LSTM
 from keras.preprocessing.text import Tokenizer
@@ -49,14 +49,14 @@ class RNNModel:
 
     def activate_rnn_model_v1(self):
         self.__text_preproccessing()
-        # create the model
+
         model = Sequential()
         model.add(Embedding(1000, 32, input_length=self.__max_len))
-        model.add(LSTM(100))
+        model.add(LSTM(32))
         model.add(Dense(self.__num_samples.size, activation='softmax'))
         model.compile(loss='categorical_crossentropy', optimizer='adam', metrics=['accuracy'])
         print(model.summary())
-        history = model.fit(self.__X_train, self.__y_train, epochs=20, batch_size=5, verbose=1, validation_split=0.1)
+        history = model.fit(self.__X_train, self.__y_train, epochs=20, batch_size=10, verbose=1, validation_split=0.1)
 
         service = Service(self.__encoder, self.__tokenizer, model)
         service.plot_history(history)
@@ -64,16 +64,16 @@ class RNNModel:
 
     def activate_rnn_model_v2(self):
         self.__text_preproccessing()
-        # create the model
+
         model = Sequential()
-        model.add(Embedding(1000, 32, input_length=self.__max_len))
-        model.add(Dropout(0.2))
-        model.add(LSTM(100))
-        model.add(Dropout(0.2))
+        model.add(Embedding(1000, 64, input_length=self.__max_len))
+        model.add(SpatialDropout1D(0.2))
+        model.add(LSTM(100, dropout=0.2, recurrent_dropout=0.2))
+
         model.add(Dense(self.__num_samples.size, activation='softmax'))
-        model.compile(loss='categorical_crossentropy', optimizer='adam', metrics=['accuracy'])
+        model.compile(loss='categorical_crossentropy', optimizer='rmsprop', metrics=['accuracy'])
         print(model.summary())
-        history = model.fit(self.__X_train, self.__y_train, epochs=20, batch_size=5, verbose=1, validation_split=0.1)
+        history = model.fit(self.__X_train, self.__y_train, epochs=30, batch_size=10, verbose=1, validation_split=0.20)
 
         service = Service(self.__encoder, self.__tokenizer, model)
         service.plot_history(history)

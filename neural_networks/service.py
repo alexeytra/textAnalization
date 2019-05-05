@@ -29,7 +29,7 @@ class Service:
         plt.title('Обучение и проверка (Точность)')
         plt.legend()
         plt.subplot(1, 2, 2)
-        plt.plot(x, loss, 'b', label='Функция поторь обучения')
+        plt.plot(x, loss, 'b', label='Функция потерь обучения')
         plt.plot(x, val_loss, 'r', label='Функция потерь проверки')
         plt.title('Обучение и проверка (loss function)')
         plt.legend()
@@ -45,8 +45,18 @@ class Service:
         self.__prediction(y_test)
 
     def __prediction(self, y_test):
+
         text_labels = self.__encoder.classes_
-        prediction = self.__model.predict(np.array([y_test[1]]))
-        predicted_label = text_labels[np.argmax(prediction[0])]
-        print("Sentence: " + self.__test[1])
-        print("Predicted label: " + predicted_label)
+        f = open('prediction.txt', 'w', encoding='utf-8')
+        i = 1
+        for x_t in y_test:
+            prediction = self.__model.predict(np.array([x_t]))
+            predicted_label = text_labels[np.argmax(prediction[0])]
+            f.write('sentence: ' + self.__test[i] + '\n')
+            f.write('prediction: ' + predicted_label + '\n')
+            f.write('================================================' + '\n')
+            i += 1
+        f.close()
+
+
+

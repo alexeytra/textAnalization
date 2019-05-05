@@ -6,11 +6,11 @@ from neural_networks.rnn import RNNModel
 
 # simple model
 # mlp_model = MLPModel()
-# mlp_model.activate_mlp_model_v1()
+# mlp_model.activate_mlp_model_v2()
 
 #convolutional neural networ
 # cnn_model = CNNModel()
-# cnn_model.activate_cnn_model_v1()
+# cnn_model.activate_cnn_model_v3()
 
 # Recurrent neural network
 rnn_model = RNNModel()

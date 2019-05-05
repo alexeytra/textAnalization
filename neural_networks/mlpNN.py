@@ -53,12 +53,57 @@ class MLPModel:
 
         model.compile(loss='categorical_crossentropy', optimizer='adam', metrics=['accuracy'])
 
-        history = model.fit(self.__X_train, self.__y_train, batch_size=5, epochs=35, verbose=1, validation_split=0.1)
+        history = model.fit(self.__X_train, self.__y_train, batch_size=10, epochs=20, verbose=1, validation_split=0.20)
         # score = model.evaluate(X_test, y_test, batch_size=2, verbose=1)
 
         serviceNNs = Service(self.__encoder, self.__tokenizer, model)
         serviceNNs.plot_history(history)
         serviceNNs.prediction_mlp()
 
+    def activate_mlp_model_v2(self):
+        self.__text_preproccessing()
 
+        model = Sequential()
+        model.add(layers.Dense(800, input_shape=(self.__X_train.shape[1],), activation='relu'))
+        model.add(layers.Dropout(0.3))
+        model.add(layers.Dense(500, activation='relu'))
+        model.add(layers.Dropout(0.3))
+        model.add(layers.Dense(300, activation='relu'))
+        model.add(layers.Dropout(0.3))
+        model.add(layers.Dense(self.__num_samples.size, activation='softmax'))
+        model.summary()
 
+        model.compile(loss='categorical_crossentropy', optimizer='adam', metrics=['accuracy'])
+
+        history = model.fit(self.__X_train, self.__y_train, batch_size=10, epochs=20, verbose=1, validation_split=0.20)
+        # score = model.evaluate(X_test, y_test, batch_size=2, verbose=1)
+
+        serviceNNs = Service(self.__encoder, self.__tokenizer, model)
+        serviceNNs.plot_history(history)
+        serviceNNs.prediction_mlp()
+
+    def activate_mlp_model_v3(self):
+        self.__text_preproccessing()
+
+        model = Sequential()
+        model.add(layers.Dense(2000, input_shape=(self.__X_train.shape[1],), activation='relu'))
+        model.add(layers.Dropout(0.3))
+        model.add(layers.Dense(1500, activation='relu'))
+        model.add(layers.Dropout(0.3))
+        model.add(layers.Dense(800, activation='relu'))
+        model.add(layers.Dropout(0.3))
+        model.add(layers.Dense(500, activation='relu'))
+        model.add(layers.Dropout(0.3))
+        model.add(layers.Dense(200, activation='relu'))
+        model.add(layers.Dropout(0.3))
+        model.add(layers.Dense(self.__num_samples.size, activation='softmax'))
+        model.summary()
+
+        model.compile(loss='categorical_crossentropy', optimizer='adam', metrics=['accuracy'])
+
+        history = model.fit(self.__X_train, self.__y_train, batch_size=10, epochs=20, verbose=1, validation_split=0.20)
+        # score = model.evaluate(X_test, y_test, batch_size=2, verbose=1)
+
+        serviceNNs = Service(self.__encoder, self.__tokenizer, model)
+        serviceNNs.plot_history(history)
+        serviceNNs.prediction_mlp()
