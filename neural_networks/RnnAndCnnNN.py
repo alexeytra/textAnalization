@@ -1,5 +1,5 @@
 from keras.models import Sequential
-from keras.layers import Dense, Dropout, SpatialDropout1D
+from keras.layers import Dense, Dropout, SpatialDropout1D, Conv1D, MaxPooling1D
 from keras.layers import Embedding
 from keras.layers import LSTM
 from keras.preprocessing.text import Tokenizer
@@ -10,7 +10,7 @@ import voсabulary as voc
 from neural_networks.service import Service
 
 
-class RNNModel:
+class RnnAndCnn:
     def __init__(self):
         self.__sentences_train = None
         self.__action_train = None
@@ -47,52 +47,21 @@ class RNNModel:
         self.__num_samples = pd.Series(self.__actions, name='A').unique()
 
 
-    def activate_rnn_model_v1(self):
+    def activate_RnnAndCnn_model_v1(self):
         self.__text_preproccessing()
 
         model = Sequential()
         model.add(Embedding(1000, 32, input_length=self.__max_len))
+        model.add(Conv1D(filters=64, kernel_size=3, padding='same', activation='relu'))
+        model.add(MaxPooling1D(pool_size=2))
         model.add(LSTM(32))
         model.add(Dense(self.__num_samples.size, activation='softmax'))
-        model.compile(loss='categorical_crossentropy', optimizer='adam', metrics=['accuracy'])
-        print(model.summary())
-        history = model.fit(self.__X_train, self.__y_train, epochs=20, batch_size=10, verbose=1, validation_split=0.1)
-
-        service = Service(self.__encoder, self.__tokenizer, model)
-        service.plot_history(history)
-        service.prediction_cnn(self.__max_len)
-
-    def activate_rnn_model_v2(self):
-        self.__text_preproccessing()
-
-        model = Sequential()
-        model.add(Embedding(1000, 64, input_length=self.__max_len))
-        model.add(SpatialDropout1D(0.2))
-        model.add(LSTM(100, dropout=0.2, recurrent_dropout=0.2))
-
-        model.add(Dense(self.__num_samples.size, activation='softmax'))
-        model.compile(loss='categorical_crossentropy', optimizer='rmsprop', metrics=['accuracy'])
-        print(model.summary())
-        history = model.fit(self.__X_train, self.__y_train, epochs=30, batch_size=10, verbose=1, validation_split=0.20)
-
-        service = Service(self.__encoder, self.__tokenizer, model)
-        service.plot_history(history)
-        service.prediction_cnn(self.__max_len)
-
-    def activate_rnn_model_v3(self):
-        self.__text_preproccessing()
-
-        model = Sequential()
-
-        model.add(Embedding(50000, 100))
-        model.add(SpatialDropout1D(0.2))
-        model.add(LSTM(100, dropout=0.2, recurrent_dropout=0.2))
-        model.add(Dense(self.__num_samples.size, activation='softmax'))
 
         model.compile(loss='categorical_crossentropy', optimizer='adam', metrics=['accuracy'])
         print(model.summary())
-        history = model.fit(self.__X_train, self.__y_train, epochs=30, batch_size=5, verbose=1, validation_split=0.20)
+        history = model.fit(self.__X_train, self.__y_train, epochs=30, batch_size=20, verbose=1, validation_split=0.1)
 
         service = Service(self.__encoder, self.__tokenizer, model)
         service.plot_history(history)
         service.prediction_cnn(self.__max_len)
+
