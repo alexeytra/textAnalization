@@ -67,7 +67,7 @@ class CNNModel:
         model.compile(loss='categorical_crossentropy', optimizer='adam', metrics=['acc'])
         history = model.fit(self.__X_train, self.__y_train, batch_size=5, epochs=30, verbose=1, validation_split=0.1)
 
-        serviceNNs = Service(self.__encoder, self.__tokenizer, model)
+        serviceNNs = Service(self.__encoder, self.__tokenizer, model, "CNN V1")
         serviceNNs.plot_history(history)
         serviceNNs.prediction_cnn(self.__max_len)
 
@@ -89,7 +89,7 @@ class CNNModel:
         model.compile(loss='categorical_crossentropy', optimizer='adam', metrics=['acc'])
         history = model.fit(self.__X_train, self.__y_train, batch_size=5, epochs=30, verbose=1, validation_split=0.1)
 
-        serviceNNs = Service(self.__encoder, self.__tokenizer, model)
+        serviceNNs = Service(self.__encoder, self.__tokenizer, model, "CNN V2")
         serviceNNs.plot_history(history)
         serviceNNs.prediction_cnn(self.__max_len)
 
@@ -108,6 +108,6 @@ class CNNModel:
         model.compile(loss='categorical_crossentropy', optimizer='adam', metrics=['acc'])
         history = model.fit(self.__X_train, self.__y_train, batch_size=5, epochs=30, verbose=1, validation_split=0.1)
 
-        serviceNNs = Service(self.__encoder, self.__tokenizer, model)
+        serviceNNs = Service(self.__encoder, self.__tokenizer, model, "CNN V3")
         serviceNNs.plot_history(history)
         serviceNNs.prediction_cnn(self.__max_len)

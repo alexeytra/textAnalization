@@ -7,16 +7,16 @@ from neural_networks.RnnAndCnnNN import  RnnAndCnn
 
 # simple model
 # mlp_model = MLPModel()
-# mlp_model.activate_mlp_model_v2()
+# mlp_model.activate_mlp_model_v3()
 
-#convolutional neural networ
-# cnn_model = CNNModel()
-# cnn_model.activate_cnn_model_v3()
+#convolutional neural network
+cnn_model = CNNModel()
+cnn_model.activate_cnn_model_v3()
 
 # Recurrent neural network
 # rnn_model = RNNModel()
-# rnn_model.activate_rnn_model_v3()
+# rnn_model.activate_rnn_model_v1()
 
-#Recurrent neural network (LTSM) and Convolutional neural networ
-rcnn = RnnAndCnn()
-rcnn.activate_RnnAndCnn_model_v1()
+#Recurrent neural network (LTSM) and Convolutional neural network
+# rcnn = RnnAndCnn()
+# rcnn.activate_RnnAndCnn_model_v1()

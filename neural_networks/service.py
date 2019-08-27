@@ -9,11 +9,13 @@ import numpy as np
 
 class Service:
 
-    def __init__(self, encoder, tokenizer, model):
+    def __init__(self, encoder, tokenizer, model, name_nn):
         self.__encoder = encoder
         self.__tokenizer = tokenizer
         self.__model = model
         self.__test = voc.getTest()
+        self.__name_nn = name_nn
+        self.save_model()
 
     def plot_history(self, history):
         acc = history.history['acc']
@@ -47,16 +49,24 @@ class Service:
     def __prediction(self, y_test):
 
         text_labels = self.__encoder.classes_
-        f = open('prediction.txt', 'w', encoding='utf-8')
+        f = open('prediction.txt', 'a', encoding='utf-8')
         i = 1
+        f.write("+++++++++++++++++" + self.__name_nn + "+++++++++++++++++" + '\n')
         for x_t in y_test:
             prediction = self.__model.predict(np.array([x_t]))
             predicted_label = text_labels[np.argmax(prediction[0])]
             f.write('sentence: ' + self.__test[i] + '\n')
             f.write('prediction: ' + predicted_label + '\n')
             f.write('================================================' + '\n')
+
+            # print('sentence: ' + self.__test[i] + '\n')
+            # print('prediction: ' + predicted_label + '\n')
+            # print('================================================' + '\n')
             i += 1
         f.close()
+
+    def save_model(self):
+        self.__model.save('trained_nns/' + self.__name_nn.replace(' ', '_') + '.h5')
 
 
 

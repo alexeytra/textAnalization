@@ -61,7 +61,7 @@ class RnnAndCnn:
         print(model.summary())
         history = model.fit(self.__X_train, self.__y_train, epochs=30, batch_size=20, verbose=1, validation_split=0.1)
 
-        service = Service(self.__encoder, self.__tokenizer, model)
+        service = Service(self.__encoder, self.__tokenizer, model, "CNN + RNN V1")
         service.plot_history(history)
         service.prediction_cnn(self.__max_len)
 

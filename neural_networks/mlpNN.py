@@ -56,7 +56,7 @@ class MLPModel:
         history = model.fit(self.__X_train, self.__y_train, batch_size=10, epochs=20, verbose=1, validation_split=0.20)
         # score = model.evaluate(X_test, y_test, batch_size=2, verbose=1)
 
-        serviceNNs = Service(self.__encoder, self.__tokenizer, model)
+        serviceNNs = Service(self.__encoder, self.__tokenizer, model, "MLP V1")
         serviceNNs.plot_history(history)
         serviceNNs.prediction_mlp()
 
@@ -78,7 +78,7 @@ class MLPModel:
         history = model.fit(self.__X_train, self.__y_train, batch_size=10, epochs=20, verbose=1, validation_split=0.20)
         # score = model.evaluate(X_test, y_test, batch_size=2, verbose=1)
 
-        serviceNNs = Service(self.__encoder, self.__tokenizer, model)
+        serviceNNs = Service(self.__encoder, self.__tokenizer, model, "MLP V2")
         serviceNNs.plot_history(history)
         serviceNNs.prediction_mlp()
 
@@ -104,6 +104,6 @@ class MLPModel:
         history = model.fit(self.__X_train, self.__y_train, batch_size=10, epochs=20, verbose=1, validation_split=0.20)
         # score = model.evaluate(X_test, y_test, batch_size=2, verbose=1)
 
-        serviceNNs = Service(self.__encoder, self.__tokenizer, model)
+        serviceNNs = Service(self.__encoder, self.__tokenizer, model, "MLP V3")
         serviceNNs.plot_history(history)
         serviceNNs.prediction_mlp()

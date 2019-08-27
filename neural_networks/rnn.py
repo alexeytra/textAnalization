@@ -58,7 +58,7 @@ class RNNModel:
         print(model.summary())
         history = model.fit(self.__X_train, self.__y_train, epochs=20, batch_size=10, verbose=1, validation_split=0.1)
 
-        service = Service(self.__encoder, self.__tokenizer, model)
+        service = Service(self.__encoder, self.__tokenizer, model, "RNN V1")
         service.plot_history(history)
         service.prediction_cnn(self.__max_len)
 
@@ -75,7 +75,7 @@ class RNNModel:
         print(model.summary())
         history = model.fit(self.__X_train, self.__y_train, epochs=30, batch_size=10, verbose=1, validation_split=0.20)
 
-        service = Service(self.__encoder, self.__tokenizer, model)
+        service = Service(self.__encoder, self.__tokenizer, model, "CNN V2")
         service.plot_history(history)
         service.prediction_cnn(self.__max_len)
 
@@ -93,6 +93,6 @@ class RNNModel:
         print(model.summary())
         history = model.fit(self.__X_train, self.__y_train, epochs=30, batch_size=5, verbose=1, validation_split=0.20)
 
-        service = Service(self.__encoder, self.__tokenizer, model)
+        service = Service(self.__encoder, self.__tokenizer, model, "CNN V3")
         service.plot_history(history)
         service.prediction_cnn(self.__max_len)
